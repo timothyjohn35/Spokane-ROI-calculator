@@ -7,9 +7,14 @@
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             background-color: #1a1a1a;
             color: #e0e0e0;
+        }
+        .iframe-container {
+            width: 100%;
+            height: 600px;
+            overflow: auto;
         }
         .calculator-container {
             max-width: 600px;
@@ -78,41 +83,42 @@
     </style>
 </head>
 <body>
+<div class="iframe-container">
+    <div class="calculator-container">
+        <h1>POWER Platform Impact Calculator</h1>
+        <p class="description">
+            Discover how the POWER Platform enhances student retention and offers significant returns on investment.
+        </p>
 
-<div class="calculator-container">
-    <h1>POWER Platform Impact Calculator</h1>
-    <p class="description">
-        Discover how the POWER Platform enhances student retention and offers significant returns on investment.
-    </p>
+        <!-- Input Controls -->
+        <div class="input-group">
+            <label for="students">Number of Students:</label>
+            <input type="number" id="students" min="1" value="300">
+        </div>
 
-    <!-- Input Controls -->
-    <div class="input-group">
-        <label for="students">Number of Students:</label>
-        <input type="number" id="students" min="1" value="300">
-    </div>
+        <div class="input-group">
+            <label for="price">Monthly Price per Student ($):</label>
+            <input type="number" id="price" min="0" value="25">
+        </div>
 
-    <div class="input-group">
-        <label for="price">Monthly Price per Student ($):</label>
-        <input type="number" id="price" min="0" value="25">
-    </div>
+        <div class="input-group">
+            <label for="semesters">Number of Semesters:</label>
+            <input type="number" id="semesters" min="1" value="2">
+        </div>
 
-    <div class="input-group">
-        <label for="semesters">Number of Semesters:</label>
-        <input type="number" id="semesters" min="1" value="2">
-    </div>
+        <div class="input-group">
+            <label for="retention">Expected Increase in Retention Rate (%):</label>
+            <input type="number" id="retention" min="0" max="100" value="10">
+        </div>
 
-    <div class="input-group">
-        <label for="retention">Expected Increase in Retention Rate (%):</label>
-        <input type="number" id="retention" min="0" max="100" value="10">
-    </div>
-
-    <!-- Calculated Outputs -->
-    <div class="output-group">
-        <div>Total Cost of POWER Platform: $<span id="totalCost">75,000</span></div>
-        <div>Additional Students Retained: <span id="additionalStudents">30</span></div>
-        <div>Additional Tuition Revenue: $<span id="additionalRevenue">45,000</span></div>
-        <div>Return on Investment (ROI): <span id="roi">-40</span>%</div>
-        <div>Breakeven Retention Increase Needed: <span id="breakeven">17</span>%</div>
+        <!-- Calculated Outputs -->
+        <div class="output-group">
+            <div>Total Cost of POWER Platform: $<span id="totalCost">75,000</span></div>
+            <div>Additional Students Retained: <span id="additionalStudents">30</span></div>
+            <div>Additional Tuition Revenue: $<span id="additionalRevenue">45,000</span></div>
+            <div>Return on Investment (ROI): <span id="roi">-40.00</span>%</div>
+            <div>Breakeven Retention Increase Needed: <span id="breakeven">16.67</span>%</div>
+        </div>
     </div>
 </div>
 
@@ -140,7 +146,7 @@
         const numberOfStudents = parseInt(studentsInput.value) || 0;
         const monthlyPricePerStudent = parseInt(priceInput.value) || 0;
         const numberOfSemesters = parseInt(semestersInput.value) || 0;
-        const retentionIncrease = parseInt(retentionInput.value) || 0;
+        const retentionIncrease = parseFloat(retentionInput.value) || 0;
 
         // Calculations
         const totalMonths = numberOfSemesters * monthsPerSemester;
@@ -154,8 +160,8 @@
         totalCostOutput.textContent = totalCost.toLocaleString();
         additionalStudentsOutput.textContent = additionalStudents;
         additionalRevenueOutput.textContent = additionalRevenue.toLocaleString();
-        roiOutput.textContent = Math.round(roi);
-        breakevenOutput.textContent = Math.round(breakevenRetention);
+        roiOutput.textContent = roi.toFixed(2);
+        breakevenOutput.textContent = breakevenRetention.toFixed(2);
     }
 
     // Event Listeners for live updates
