@@ -14,12 +14,11 @@
         .iframe-container {
             width: 100%;
             height: 600px;
-            overflow: hidden;
+            overflow: auto;
         }
         .calculator-container {
             display: flex;
             flex-direction: column;
-            height: 100%;
             padding: 20px;
             box-sizing: border-box;
         }
@@ -37,8 +36,8 @@
         }
         .content-wrapper {
             display: flex;
-            flex: 1;
             gap: 20px;
+            margin-bottom: 20px;
         }
         .input-section, .output-section {
             flex: 1;
@@ -116,6 +115,18 @@
         .negative {
             color: #f44336;
         }
+        .additional-info {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #b0b0b0;
+        }
+        .additional-info strong {
+            color: #4da6ff;
+        }
     </style>
 </head>
 <body>
@@ -127,18 +138,17 @@
         </p>
         <div class="content-wrapper">
             <div class="input-section">
-                <!-- Input Controls -->
                 <div class="input-group">
                     <label for="students">Number of Students:</label>
                     <input type="number" id="students" min="1" value="300">
                 </div>
                 <div class="input-group">
                     <label for="price">Monthly Price per Student ($):</label>
-                    <input type="number" id="price" min="0" value="25">
+                    <input type="number" id="price" min="0" value="10">
                 </div>
                 <div class="input-group">
                     <label for="semesters">Number of Semesters:</label>
-                    <input type="number" id="semesters" min="1" value="2">
+                    <input type="number" id="semesters" min="1" value="1">
                 </div>
                 <div class="input-group">
                     <label for="retention">Expected Increase in Retention Rate (%):</label>
@@ -146,12 +156,11 @@
                 </div>
             </div>
             <div class="output-section">
-                <!-- Calculated Outputs -->
                 <div class="output-group">
                     <div class="result-card">
                         <div class="result-icon">💰</div>
                         <div class="result-label">Total Cost of POWER Platform</div>
-                        <div class="result-value">$<span id="totalCost">75,000</span></div>
+                        <div class="result-value">$<span id="totalCost">15,000</span></div>
                     </div>
                     <div class="result-card">
                         <div class="result-icon">👥</div>
@@ -161,20 +170,24 @@
                     <div class="result-card">
                         <div class="result-icon">📈</div>
                         <div class="result-label">Additional Tuition Revenue</div>
-                        <div class="result-value">$<span id="additionalRevenue">90,000</span></div>
+                        <div class="result-value">$<span id="additionalRevenue">45,000</span></div>
                     </div>
                     <div class="result-card">
                         <div class="result-icon">🔄</div>
                         <div class="result-label">Return on Investment (ROI)</div>
-                        <div class="result-value"><span id="roi">20.00</span>%</div>
+                        <div class="result-value"><span id="roi">200.00</span>%</div>
                     </div>
                     <div class="result-card">
                         <div class="result-icon">⚖️</div>
                         <div class="result-label">Breakeven Retention Increase Needed</div>
-                        <div class="result-value"><span id="breakeven">8.33</span>%</div>
+                        <div class="result-value"><span id="breakeven">3.33</span>%</div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="additional-info">
+            <p><strong>How POWER Platform Works:</strong> Through evidence-based coaching and applied psychology, the POWER Platform helps students clarify goals, craft plans, take aligned action, and maintain motivation to overcome obstacles. Its personalized and non-judgmental nature creates a low-barrier, scalable support system that fills guidance gaps in education.</p>
+            <p><strong>Beyond Retention:</strong> While the ROI above focuses on retention, engagement with the platform is expected to increase student persistence, academic success, and overall well-being, especially for underserved student groups. These intangible benefits contribute to improved institutional reputation, enhanced student satisfaction, and long-term career prospects.</p>
         </div>
     </div>
 </div>
