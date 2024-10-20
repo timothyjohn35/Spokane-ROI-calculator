@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>POWER Platform Impact Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+        .calculator-container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #2a2a2a;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+        h1 {
+            text-align: center;
+            color: #4da6ff;
+            margin-bottom: 20px;
+        }
+        .description {
+            text-align: center;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            color: #b0b0b0;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #4da6ff;
+        }
+        .input-group input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #3a3a3a;
+            border: 2px solid #4da6ff;
+            border-radius: 5px;
+            color: #e0e0e0;
+            box-sizing: border-box;
+        }
+        .input-group input[type="number"]::-webkit-inner-spin-button,
+        .input-group input[type="number"]::-webkit-outer-spin-button {
+            opacity: 1;
+            background: #4da6ff;
+            border-radius: 50%;
+            height: 24px;
+            width: 24px;
+            cursor: pointer;
+        }
+        .output-group {
+            background-color: #3a3a3a;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            box-shadow: 0 0 10px rgba(77, 166, 255, 0.2);
+        }
+        .output-group div {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: #b0b0b0;
+        }
+        .output-group span {
+            font-weight: bold;
+            color: #4da6ff;
+            font-size: 22px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator-container">
+    <h1>POWER Platform Impact Calculator</h1>
+    <p class="description">
+        Discover how the POWER Platform enhances student retention and offers significant returns on investment.
+    </p>
+
+    <!-- Input Controls -->
+    <div class="input-group">
+        <label for="students">Number of Students:</label>
+        <input type="number" id="students" min="1" value="300">
+    </div>
+
+    <div class="input-group">
+        <label for="price">Monthly Price per Student ($):</label>
+        <input type="number" id="price" min="0" value="25">
+    </div>
+
+    <div class="input-group">
+        <label for="semesters">Number of Semesters:</label>
+        <input type="number" id="semesters" min="1" value="2">
+    </div>
+
+    <div class="input-group">
+        <label for="retention">Expected Increase in Retention Rate (%):</label>
+        <input type="number" id="retention" min="0" max="100" value="10">
+    </div>
+
+    <!-- Calculated Outputs -->
+    <div class="output-group">
+        <div>Total Cost of POWER Platform: $<span id="totalCost">75,000</span></div>
+        <div>Additional Students Retained: <span id="additionalStudents">30</span></div>
+        <div>Additional Tuition Revenue: $<span id="additionalRevenue">45,000</span></div>
+        <div>Return on Investment (ROI): <span id="roi">-40</span>%</div>
+        <div>Breakeven Retention Increase Needed: <span id="breakeven">17</span>%</div>
+    </div>
+</div>
+
+<script>
+    // Input Elements
+    const studentsInput = document.getElementById('students');
+    const priceInput = document.getElementById('price');
+    const semestersInput = document.getElementById('semesters');
+    const retentionInput = document.getElementById('retention');
+
+    // Output Elements
+    const totalCostOutput = document.getElementById('totalCost');
+    const additionalStudentsOutput = document.getElementById('additionalStudents');
+    const additionalRevenueOutput = document.getElementById('additionalRevenue');
+    const roiOutput = document.getElementById('roi');
+    const breakevenOutput = document.getElementById('breakeven');
+
+    // Constants
+    const averageTuition = 1500; // Average tuition per student per semester
+    const monthsPerSemester = 5;
+
+    // Update Calculator Function
+    function updateCalculator() {
+        // Get input values
+        const numberOfStudents = parseInt(studentsInput.value) || 0;
+        const monthlyPricePerStudent = parseInt(priceInput.value) || 0;
+        const numberOfSemesters = parseInt(semestersInput.value) || 0;
+        const retentionIncrease = parseInt(retentionInput.value) || 0;
+
+        // Calculations
+        const totalMonths = numberOfSemesters * monthsPerSemester;
+        const totalCost = numberOfStudents * monthlyPricePerStudent * totalMonths;
+        const additionalStudents = Math.round(numberOfStudents * (retentionIncrease / 100));
+        const additionalRevenue = additionalStudents * averageTuition * numberOfSemesters;
+        const roi = ((additionalRevenue - totalCost) / totalCost) * 100;
+        const breakevenRetention = ((totalCost / (numberOfStudents * averageTuition * numberOfSemesters)) * 100);
+
+        // Update output display values
+        totalCostOutput.textContent = totalCost.toLocaleString();
+        additionalStudentsOutput.textContent = additionalStudents;
+        additionalRevenueOutput.textContent = additionalRevenue.toLocaleString();
+        roiOutput.textContent = Math.round(roi);
+        breakevenOutput.textContent = Math.round(breakevenRetention);
+    }
+
+    // Event Listeners for live updates
+    studentsInput.addEventListener('input', updateCalculator);
+    priceInput.addEventListener('input', updateCalculator);
+    semestersInput.addEventListener('input', updateCalculator);
+    retentionInput.addEventListener('input', updateCalculator);
+
+    // Initial Calculation
+    updateCalculator();
+</script>
+
+</body>
+</html>
