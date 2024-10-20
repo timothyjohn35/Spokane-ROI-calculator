@@ -14,29 +14,39 @@
         .iframe-container {
             width: 100%;
             height: 600px;
-            overflow: auto;
+            overflow: hidden;
         }
         .calculator-container {
-            max-width: 600px;
-            margin: auto;
-            background-color: #2a2a2a;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
         }
         h1 {
             text-align: center;
             color: #4da6ff;
-            margin-bottom: 20px;
+            margin-top: 0;
+            margin-bottom: 10px;
         }
         .description {
             text-align: center;
-            font-size: 1.1em;
-            margin-bottom: 30px;
+            font-size: 1em;
+            margin-bottom: 20px;
             color: #b0b0b0;
         }
+        .content-wrapper {
+            display: flex;
+            flex: 1;
+            gap: 20px;
+        }
+        .input-section, .output-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
         .input-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         .input-group label {
             display: block;
@@ -46,8 +56,8 @@
         }
         .input-group input[type="number"] {
             width: 100%;
-            padding: 10px;
-            font-size: 16px;
+            padding: 8px;
+            font-size: 14px;
             background-color: #3a3a3a;
             border: 2px solid #4da6ff;
             border-radius: 5px;
@@ -59,26 +69,52 @@
             opacity: 1;
             background: #4da6ff;
             border-radius: 50%;
-            height: 24px;
-            width: 24px;
+            height: 20px;
+            width: 20px;
             cursor: pointer;
         }
         .output-group {
-            background-color: #3a3a3a;
-            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 15px;
+            background-color: #2a2a2a;
             border-radius: 10px;
-            margin-top: 30px;
             box-shadow: 0 0 10px rgba(77, 166, 255, 0.2);
         }
-        .output-group div {
-            margin-bottom: 15px;
-            font-size: 18px;
-            color: #b0b0b0;
+        .result-card {
+            background-color: #3a3a3a;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.3s ease;
         }
-        .output-group span {
+        .result-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(77, 166, 255, 0.3);
+        }
+        .result-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .result-label {
+            font-size: 14px;
+            color: #b0b0b0;
+            margin-bottom: 5px;
+        }
+        .result-value {
+            font-size: 22px;
             font-weight: bold;
             color: #4da6ff;
-            font-size: 22px;
+        }
+        .positive {
+            color: #4CAF50;
+        }
+        .negative {
+            color: #f44336;
         }
     </style>
 </head>
@@ -89,35 +125,56 @@
         <p class="description">
             Discover how the POWER Platform enhances student retention and offers significant returns on investment.
         </p>
-
-        <!-- Input Controls -->
-        <div class="input-group">
-            <label for="students">Number of Students:</label>
-            <input type="number" id="students" min="1" value="300">
-        </div>
-
-        <div class="input-group">
-            <label for="price">Monthly Price per Student ($):</label>
-            <input type="number" id="price" min="0" value="25">
-        </div>
-
-        <div class="input-group">
-            <label for="semesters">Number of Semesters:</label>
-            <input type="number" id="semesters" min="1" value="2">
-        </div>
-
-        <div class="input-group">
-            <label for="retention">Expected Increase in Retention Rate (%):</label>
-            <input type="number" id="retention" min="0" max="100" value="10">
-        </div>
-
-        <!-- Calculated Outputs -->
-        <div class="output-group">
-            <div>Total Cost of POWER Platform: $<span id="totalCost">75,000</span></div>
-            <div>Additional Students Retained: <span id="additionalStudents">30</span></div>
-            <div>Additional Tuition Revenue: $<span id="additionalRevenue">45,000</span></div>
-            <div>Return on Investment (ROI): <span id="roi">-40.00</span>%</div>
-            <div>Breakeven Retention Increase Needed: <span id="breakeven">16.67</span>%</div>
+        <div class="content-wrapper">
+            <div class="input-section">
+                <!-- Input Controls -->
+                <div class="input-group">
+                    <label for="students">Number of Students:</label>
+                    <input type="number" id="students" min="1" value="300">
+                </div>
+                <div class="input-group">
+                    <label for="price">Monthly Price per Student ($):</label>
+                    <input type="number" id="price" min="0" value="25">
+                </div>
+                <div class="input-group">
+                    <label for="semesters">Number of Semesters:</label>
+                    <input type="number" id="semesters" min="1" value="2">
+                </div>
+                <div class="input-group">
+                    <label for="retention">Expected Increase in Retention Rate (%):</label>
+                    <input type="number" id="retention" min="0" max="100" value="10">
+                </div>
+            </div>
+            <div class="output-section">
+                <!-- Calculated Outputs -->
+                <div class="output-group">
+                    <div class="result-card">
+                        <div class="result-icon">💰</div>
+                        <div class="result-label">Total Cost of POWER Platform</div>
+                        <div class="result-value">$<span id="totalCost">75,000</span></div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-icon">👥</div>
+                        <div class="result-label">Additional Students Retained</div>
+                        <div class="result-value"><span id="additionalStudents">30</span></div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-icon">📈</div>
+                        <div class="result-label">Additional Tuition Revenue</div>
+                        <div class="result-value">$<span id="additionalRevenue">90,000</span></div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-icon">🔄</div>
+                        <div class="result-label">Return on Investment (ROI)</div>
+                        <div class="result-value"><span id="roi">20.00</span>%</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-icon">⚖️</div>
+                        <div class="result-label">Breakeven Retention Increase Needed</div>
+                        <div class="result-value"><span id="breakeven">8.33</span>%</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -161,6 +218,8 @@
         additionalStudentsOutput.textContent = additionalStudents;
         additionalRevenueOutput.textContent = additionalRevenue.toLocaleString();
         roiOutput.textContent = roi.toFixed(2);
+        roiOutput.parentElement.classList.toggle('positive', roi >= 0);
+        roiOutput.parentElement.classList.toggle('negative', roi < 0);
         breakevenOutput.textContent = breakevenRetention.toFixed(2);
     }
 
