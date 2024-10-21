@@ -12,30 +12,21 @@
             color: #e0e0e0;
         }
         .calculator-container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: auto;
             padding: 20px;
         }
         h1 {
             color: #4da6ff;
-            margin-bottom: 10px;
-        }
-        .description {
             margin-bottom: 20px;
         }
         .content-wrapper {
             display: flex;
             gap: 20px;
+            margin-bottom: 20px;
         }
-        .input-section {
+        .input-section, .output-section {
             flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        .output-section {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
         }
         .input-group {
             margin-bottom: 15px;
@@ -77,12 +68,23 @@
             font-weight: bold;
             color: #4da6ff;
         }
+        .bottom-section {
+            display: flex;
+            gap: 20px;
+        }
+        .breakeven-card {
+            flex: 1;
+            background-color: #2a2a2a;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
         .evidence-section {
-            margin-top: 20px;
+            flex: 2;
             padding: 15px;
             background-color: #2a2a2a;
             border-radius: 5px;
-            font-size: 12px;
+            font-size: 14px;
         }
         .evidence-section h3 {
             color: #4da6ff;
@@ -104,9 +106,6 @@
 <body>
 <div class="calculator-container">
     <h1>POWER Platform Impact Calculator</h1>
-    <p class="description">
-        Discover how the POWER Platform enhances student retention and offers significant returns on investment.
-    </p>
     <div class="content-wrapper">
         <div class="input-section">
             <div class="input-group">
@@ -124,15 +123,6 @@
             <div class="input-group">
                 <label for="retention">Expected Increase in Retention Rate (%):</label>
                 <input type="number" id="retention" min="0" max="100" value="10">
-            </div>
-            <div class="evidence-section">
-                <h3>Evidence of Impact</h3>
-                <ul>
-                    <li><strong>Online Goal-Setting:</strong> 23.5% increase in retention, closing achievement gaps. (Schippers et al., 2015)</li>
-                    <li><strong>Detailed Planning and Reflection:</strong> 0.34 GPA boost for struggling students. (Morisano et al., 2010)</li>
-                    <li><strong>AI Coaching:</strong> As effective as human coaching in helping students achieve goals. (Terblanche, 2022)</li>
-                    <li><strong>AI Chatbot Support:</strong> 63.3% of users reported reduced anxiety. (Maples et al., 2024)</li>
-                </ul>
             </div>
         </div>
         <div class="output-section">
@@ -155,14 +145,25 @@
                 <div class="result-card">
                     <div class="result-icon">🔄</div>
                     <div class="result-label">Return on Investment (ROI)</div>
-                    <div class="result-value"><span id="roi">1431.00</span>%</div>
-                </div>
-                <div class="result-card">
-                    <div class="result-icon">⚖️</div>
-                    <div class="result-label">Breakeven Retention Increase Needed</div>
-                    <div class="result-value"><span id="breakeven">0.65</span>%</div>
+                    <div class="result-value"><span id="roi">15.31</span>x</div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="bottom-section">
+        <div class="breakeven-card">
+            <div class="result-icon">⚖️</div>
+            <div class="result-label">Breakeven Retention Increase Needed</div>
+            <div class="result-value"><span id="breakeven">0.65</span>%</div>
+        </div>
+        <div class="evidence-section">
+            <h3>Evidence of Impact</h3>
+            <ul>
+                <li><strong>Online Goal-Setting:</strong> 23.5% increase in retention, closing achievement gaps. (Schippers et al., 2015)</li>
+                <li><strong>Detailed Planning and Reflection:</strong> 0.34 GPA boost for struggling students. (Morisano et al., 2010)</li>
+                <li><strong>AI Coaching:</strong> As effective as human coaching in helping students achieve goals. (Terblanche, 2022)</li>
+                <li><strong>AI Chatbot Support:</strong> 63.3% of users reported reduced anxiety. (Maples et al., 2024)</li>
+            </ul>
         </div>
     </div>
 </div>
@@ -196,13 +197,13 @@
         const totalCost = numberOfStudents * monthlyPricePerStudent * totalMonths;
         const additionalStudents = Math.round(numberOfStudents * (retentionIncrease / 100));
         const additionalRevenue = additionalStudents * averageTuition;
-        const roi = ((additionalRevenue - totalCost) / totalCost) * 100;
+        const roi = (additionalRevenue / totalCost) + 1; // Changed to calculate multiple
         const breakevenRetention = ((totalCost / (numberOfStudents * averageTuition)) * 100);
 
         totalCostOutput.textContent = totalCost.toLocaleString();
         additionalStudentsOutput.textContent = additionalStudents;
         additionalRevenueOutput.textContent = additionalRevenue.toLocaleString();
-        roiOutput.textContent = roi.toFixed(2);
+        roiOutput.textContent = roi.toFixed(2); // Display as a multiple
         breakevenOutput.textContent = breakevenRetention.toFixed(2);
     }
 
